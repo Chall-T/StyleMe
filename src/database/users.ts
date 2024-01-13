@@ -1,7 +1,9 @@
 import { prisma } from "../database"
 import { Session } from "./sessions"
+import { Profile } from "./profiles"
+
 export interface UserCreate {
-    firstName: string
+    firstName?: string
     lastName?: string
     email: string
     verified?: boolean
@@ -16,10 +18,12 @@ export interface User {
     password: string
     salt: string
     sessions: Array<Session>
+    profile: Profile
     createdAt: Date
     updatedAt: Date
 }
 const selectWithNoPassword = {
+    id: true,
     firstName: true,
     lastName: true,
     email: true,

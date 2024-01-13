@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import {get, merge} from 'lodash';
 import { UserCreate, createUser, getUserByEmail } from "../database/users";
 import { createSession, getSessionById, getSessionsByUserId } from "../database/sessions";
+import { createProfile, Profile } from "../database/profiles";
 dotenv.config({ path: __dirname+'/../.env' });
 
 
@@ -26,14 +27,12 @@ export const login = async(req: express.Request, res: express.Response) =>{
             return res.sendStatus(403);
         }
         const sessionId = newSessionId()
-        console.log(sessionId)
         const session = await createSession({
             id: sessionId,
             userId: user.id,
             ipAddress: ip,
             userAgent,
         })
-        console.log(session)
         
         const domain = process.env.DOMAIN || 'localhost';
         res.cookie('SessionId', session.id, { domain: domain, path: '/', httpOnly: true, secure: true})
@@ -68,6 +67,16 @@ export const register =async (req: express.Request, res: express.Response) =>{
             userData.lastName = lastName
         }
         const user = await createUser(userData);
+        if (!user){
+            return res.status(500).json({message: "DB user creation failed"});
+        }
+        const profile = await createProfile({
+            userId: user.id,
+            name: user.firstName || "",
+            gender: 0,
+            silhouette: 0,
+            styles: []
+        });
         return res.status(200).json(user).end();
     }catch (error){
         console.log(error);

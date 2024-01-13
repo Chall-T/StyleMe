@@ -1,9 +1,10 @@
 import express from 'express';
 
-import { getUserProfile, getUserTest } from '../controllers/users';
-import { isAuthenticated } from '../middlewares';
+import { getUserProfile, getUserTest, changeProfile } from '../controllers/users';
+import { isAuthenticated, isOwner } from '../middlewares';
 
 export default( router: express.Router) =>{
-    router.get('/user', isAuthenticated, getUserTest);
-    router.get('/profile', isAuthenticated, getUserProfile)
+    router.get('/users', isAuthenticated, isOwner, getUserTest);
+    router.get('/users/:id/profile', isAuthenticated, isOwner, getUserProfile)
+    router.put('/users/:id/profile', isAuthenticated, isOwner, changeProfile)
 };
