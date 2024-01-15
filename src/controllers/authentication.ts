@@ -36,7 +36,7 @@ export const login = async(req: express.Request, res: express.Response) =>{
         
         const domain = process.env.DOMAIN || 'localhost';
         res.cookie('SessionId', session.id, { domain: domain, path: '/', httpOnly: true, secure: true})
-        
+
         return res.status(200).json(user).end();
     }catch (error){
         console.log(error);
@@ -48,7 +48,7 @@ export const register =async (req: express.Request, res: express.Response) =>{
     try{
         const {email, password, firstName, lastName} = req.body;
 
-        if (!email || !password || !firstName){
+        if (!email || !password){
             return res.sendStatus(400);
         }
         const existingUser = await getUserByEmail(email);
@@ -59,12 +59,14 @@ export const register =async (req: express.Request, res: express.Response) =>{
         const salt = random();
         const userData: UserCreate = {
             email,
-            firstName,
             salt,
             password: authentication(salt, password),
         }
         if (lastName){
             userData.lastName = lastName
+        }
+        if (firstName){
+            userData.firstName = firstName
         }
         const user = await createUser(userData);
         if (!user){

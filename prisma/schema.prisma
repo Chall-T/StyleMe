@@ -12,8 +12,8 @@ datasource db {
 
 model User{
   id String @id @default(cuid()) @db.String(32)
-  firstName String?
-  lastName String?
+  firstName String? @default("null")
+  lastName String? @default("null")
   email String @unique
   verified Boolean @default(false)
   password String

@@ -17,7 +17,7 @@ export const changeProfile = async(req: any, res: express.Response) =>{
         const { id } = req.params;
         const updatedProfile = req.body;
 
-        if (updatedProfile.id || updatedProfile.userId){
+        if (updatedProfile.id || updatedProfile.userId || updatedProfile.email || updatedProfile.createdAt || updatedProfile.updatedAt){
             return res.sendStatus(400);
         }
         const profile = await updateProfileByUserId(id, updatedProfile)
