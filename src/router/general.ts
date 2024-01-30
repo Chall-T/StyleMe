@@ -7,7 +7,7 @@ export default( router: express.Router) =>{
     router.get('/genders', isAuthenticated, getGenders);
     router.get('/styles', isAuthenticated, getStyles)
     router.get('/silhouettes', isAuthenticated, getSilhouettes)
-    router.post('/genders', isAuthenticated, isOwner, addGender)
-    router.post('/styles', isAuthenticated, isOwner, addStyle)
-    router.post('/silhouettes', isAuthenticated, isOwner, addSilhouette)
+    router.post('/genders', isAuthenticated, addGender)
+    router.post('/styles', isAuthenticated, addStyle)
+    router.post('/silhouettes', isAuthenticated, addSilhouette)
 };
