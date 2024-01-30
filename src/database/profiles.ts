@@ -54,12 +54,18 @@ export const removeStyleToProfileByUserId = async (userId: string, styleId: numb
     } catch (error) {
       console.error(error);
     }
-  };
+};
 
 
 
 
 
+
+
+
+export const getAllGenders = async() => prisma.gender.findMany();
+export const getAllSilhouettes = async() => prisma.silhouette.findMany();
+export const getAllStyles = async() => prisma.style.findMany();
 
 export const createGender = async(genderData: Prisma.GenderUncheckedCreateInput) => {
     try{
