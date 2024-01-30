@@ -7,7 +7,6 @@ import { getUserByIdNoPassword } from '../database/users';
 export const isAuthenticated = async(req: express.Request, res: express.Response, next: express.NextFunction) =>{
     try{
         const sessionToken = req.headers.authorization ? req.headers.authorization.split(" ")[1] : undefined || req.cookies['SessionId'];
-        console.log(sessionToken)
         if (!sessionToken){
             return res.status(401).json({message: "Missing SessionId!"}).end();
         }

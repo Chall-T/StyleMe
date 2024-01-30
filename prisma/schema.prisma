@@ -9,6 +9,14 @@ datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
+model Session{
+  id String @id
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  ipAddress String
+  userAgent String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
 
 model User{
   id String @id @default(cuid()) @db.String(32)
@@ -23,26 +31,37 @@ model User{
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 }
-model Session{
-  id String @id
-  user User @relation(fields: [userId], references: [id])
-  userId String
-  ipAddress String
-  userAgent String
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-}
 
 model Profile{
   id String @id @default(cuid()) @db.String(32)
   user User @relation(fields: [userId], references: [id])
   userId String @unique
   name String
-  gender Int
-  silhouette Int
+  gender Gender @relation(fields: [genderId], references: [id])
+  genderId BigInt @default(0)
+  silhouette Silhouette @relation(fields: [silhouetteId], references: [id])
+  silhouetteId BigInt @default(0)
   accessories Boolean @default(false)
   budget Int?
   season Int?
-  styles Int[]
+  styles Style[]
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
+}
+model Silhouette{
+  id BigInt @id @default(autoincrement())
+  name String
+  Profiles Profile[]
+}
+
+model Style{
+  id BigInt @id @default(autoincrement())
+  name String
+  Profiles Profile[]
+}
+
+model Gender{
+  id BigInt @id @default(autoincrement())
+  name String
+  Profiles Profile[]
 }

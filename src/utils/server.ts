@@ -1,7 +1,7 @@
 
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import express from 'express';
+import express, { response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import router from '../router';
@@ -18,5 +18,6 @@ export const server = () =>{
     app.use(bodyParser.urlencoded({ extended: true }));
     
     app.use('/', router());
+    
     return app
 }

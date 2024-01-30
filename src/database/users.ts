@@ -1,27 +1,6 @@
 import { prisma } from "../database"
-import { Session } from "./sessions"
-import { Profile } from "./profiles"
+import { Prisma } from '@prisma/client';
 
-export interface UserCreate {
-    firstName?: string
-    lastName?: string
-    email: string
-    verified?: boolean
-    password: string
-    salt: string
-}
-export interface User {
-    firstName: string
-    lastName: string
-    email: string
-    verified: boolean
-    password: string
-    salt: string
-    sessions: Array<Session>
-    profile: Profile
-    createdAt: Date
-    updatedAt: Date
-}
 const selectWithNoPassword = {
     id: true,
     firstName: true,
@@ -31,8 +10,7 @@ const selectWithNoPassword = {
     createdAt: true,
     updatedAt: true
 }
-
-export const createUser = async(userData: UserCreate) => {
+export const createUser = async(userData: Prisma.UserCreateInput) => {
     try{
         const user = await prisma.user.create({
             data: userData,
