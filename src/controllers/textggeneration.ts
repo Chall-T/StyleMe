@@ -14,8 +14,8 @@ export const generateOutfits = async(req: express.Request, res: express.Response
 
     const styleNames = profile.styles.length> 0? profile.styles.map(style => style.name): "simple";
 
-    const prompt = `Create exactly ${count} Outfit Objects (The objects need to have "top", "bottom", "shoes", "accessory" in it) in a list. for a ${profile.gender.name}. My silhouette is ${profile.silhouette.name}. The style represent those styles: ${styleNames} if a style does not fit to the rest, ignore it.`
-    console.log(prompt)
+    const prompt = `Create EXACTLY ${count} Outfit Objects (The objects need to have "top", "bottom", "shoes", "accessory" in it) in a list. for a ${profile.gender.name}. My silhouette is ${profile.silhouette.name}. The style represent those styles: ${styleNames} if a style does not fit to the rest, ignore it. BE DESCRIPTIVE.`
+    console.log(`PROMPT: ${prompt}`)
     try{
         const completion = await openai.chat.completions.create({
             messages: [
