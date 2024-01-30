@@ -11,7 +11,8 @@ export const generateOutfits = async(req: express.Request, res: express.Response
     let count: number = parseInt(req.params.count, 10);
     const profile = await getProfileByUserId(currentUserId)
     count = count>MAX_GENERATIONS? MAX_GENERATIONS:count
-    const styleNames = profile.styles.map(style => style.name);
+
+    const styleNames = profile.styles.length> 0? profile.styles.map(style => style.name): "simple";
 
     const prompt = `Create exactly ${count} Outfit Objects (The objects need to have "top", "bottom", "shoes", "accessory" in it) in a list. for a ${profile.gender.name}. My silhouette is ${profile.silhouette.name}. The style represent those styles: ${styleNames} if a style does not fit to the rest, ignore it.`
     console.log(prompt)
