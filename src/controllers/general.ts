@@ -43,7 +43,7 @@ export const getSilhouettes =async(req: any, res: express.Response) =>{
 export const addStyle =async(req: any, res: express.Response) =>{
     try{
         const body = req.body;
-        const result = await createGender(body)
+        const result = await createStyle(body);
         if (!result){
             return res.sendStatus(500);
         }
