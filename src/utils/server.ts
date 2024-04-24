@@ -8,9 +8,10 @@ import router from '../router';
 
 export const server = () =>{
     const app = express();
-    app.use(cors({
-        credentials: true,
-    }))
+    // app.use(cors({
+    //     credentials: true,
+    // }))
+    app.use(cors())
     app.use(express.json());
     app.use(compression())
     app.use(cookieParser())
